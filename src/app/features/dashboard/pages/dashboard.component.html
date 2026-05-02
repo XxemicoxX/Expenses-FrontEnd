@@ -1,0 +1,89 @@
+<div class="dashboard">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Dashboard</h1>
+      <p class="page-sub">Resumen financiero del sistema</p>
+    </div>
+    <div class="header-date">{{ today | date:'EEEE, d MMMM yyyy':'':'es' }}</div>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="kpi-grid">
+    <div class="kpi-card kpi-red">
+      <div class="kpi-icon">◈</div>
+      <div class="kpi-data">
+        <span class="kpi-label">Total Gastos</span>
+        <span class="kpi-value">S/ {{ totalSpents() | number:'1.2-2' }}</span>
+        <span class="kpi-sub">{{ spentCount() }} registros</span>
+      </div>
+    </div>
+
+    <div class="kpi-card kpi-green">
+      <div class="kpi-icon">◇</div>
+      <div class="kpi-data">
+        <span class="kpi-label">Total Ingresos</span>
+        <span class="kpi-value">S/ {{ totalIncomes() | number:'1.2-2' }}</span>
+        <span class="kpi-sub">{{ incomeCount() }} registros</span>
+      </div>
+    </div>
+
+    <div class="kpi-card" [class.kpi-blue]="balance >= 0" [class.kpi-red]="balance < 0">
+      <div class="kpi-icon">≈</div>
+      <div class="kpi-data">
+        <span class="kpi-label">Balance Neto</span>
+        <span class="kpi-value">S/ {{ balance | number:'1.2-2' }}</span>
+        <span class="kpi-sub">Ingresos - Gastos</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick nav -->
+  <div class="section-label">Accesos rápidos</div>
+  <div class="quick-links">
+    <a routerLink="/spents" class="quick-link">
+      <span class="ql-icon">◈</span>
+      <span class="ql-text">Gastos</span>
+    </a>
+    <a routerLink="/incomes" class="quick-link">
+      <span class="ql-icon">◇</span>
+      <span class="ql-text">Ingresos</span>
+    </a>
+    <a routerLink="/categories" class="quick-link">
+      <span class="ql-icon">◆</span>
+      <span class="ql-text">Categorías</span>
+    </a>
+    <a routerLink="/payments" class="quick-link">
+      <span class="ql-icon">◉</span>
+      <span class="ql-text">Métodos de Pago</span>
+    </a>
+    <a routerLink="/types" class="quick-link">
+      <span class="ql-icon">◎</span>
+      <span class="ql-text">Tipos</span>
+    </a>
+    <a routerLink="/users" class="quick-link">
+      <span class="ql-icon">◐</span>
+      <span class="ql-text">Usuarios</span>
+    </a>
+  </div>
+
+  <!-- Recent spents -->
+  <div class="section-label">Últimos Gastos</div>
+  <div class="recent-table">
+    @if (recentSpents().length === 0) {
+      <div class="empty-recent">No hay gastos registrados aún</div>
+    } @else {
+      @for (s of recentSpents(); track s.id_spent) {
+        <div class="recent-row">
+          <div class="recent-info">
+            <span class="recent-name">{{ s.name }}</span>
+            <span class="recent-desc">{{ s.description }}</span>
+          </div>
+          <div class="recent-right">
+            <span class="recent-amount">-S/ {{ s.amount | number:'1.2-2' }}</span>
+            <span class="recent-date">{{ s.date }}</span>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</div>

@@ -1,11 +1,40 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+  "cli": {
+    "packageManager": "npm",
+    "analytics": false
+  },
   "newProjectRoot": "projects",
   "projects": {
-    "expenses-frontend": {
+    "expense-tracker": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:component": {
+          "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
+        },
+        "@schematics/angular:resolver": {
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -14,9 +43,6 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
@@ -56,35 +82,13 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "expenses-frontend:build:production"
+              "buildTarget": "expense-tracker:build:production"
             },
             "development": {
-              "buildTarget": "expenses-frontend:build:development"
+              "buildTarget": "expense-tracker:build:development"
             }
           },
           "defaultConfiguration": "development"
-        },
-        "extract-i18n": {
-          "builder": "@angular/build:extract-i18n"
-        },
-        "test": {
-          "builder": "@angular/build:karma",
-          "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
-            "styles": [
-              "src/styles.css"
-            ]
-          }
         }
       }
     }

@@ -1,0 +1,33 @@
+<aside class="sidebar" [class.collapsed]="collapsed()">
+  <div class="sidebar-header">
+    <div class="logo-area">
+      <span class="logo-icon">⬡</span>
+      @if (!collapsed()) {
+        <span class="logo-text">FinTrack</span>
+      }
+    </div>
+    <button class="collapse-btn" (click)="toggle()" [title]="collapsed() ? 'Expandir' : 'Colapsar'">
+      {{ collapsed() ? '›' : '‹' }}
+    </button>
+  </div>
+
+  <nav class="nav-list">
+    @for (item of navItems; track item.route) {
+      <a class="nav-item"
+         [routerLink]="item.route"
+         routerLinkActive="active"
+         [title]="item.label">
+        <span class="nav-icon">{{ item.icon }}</span>
+        @if (!collapsed()) {
+          <span class="nav-label">{{ item.label }}</span>
+        }
+      </a>
+    }
+  </nav>
+
+  <div class="sidebar-footer">
+    @if (!collapsed()) {
+      <div class="version-tag">v1.0.0</div>
+    }
+  </div>
+</aside>

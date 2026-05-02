@@ -1,0 +1,19 @@
+@if (visible) {
+  <div class="modal-overlay" (click)="cancelled.emit()">
+    <div class="modal-panel" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">{{ isEdit ? 'Editar' : 'Nuevo' }} {{ title }}</h3>
+        <button class="modal-close" (click)="cancelled.emit()">✕</button>
+      </div>
+      <div class="modal-body">
+        <ng-content></ng-content>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-cancel" (click)="cancelled.emit()">Cancelar</button>
+        <button type="button" class="btn-submit" (click)="submitted.emit()">
+          {{ isEdit ? 'Actualizar' : 'Guardar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

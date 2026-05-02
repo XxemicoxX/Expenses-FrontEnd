@@ -1,59 +1,63 @@
-# ExpensesFrontend
+# FinTrack — Gestión Financiera
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.10.
+Frontend Angular 21 para el sistema de gestión de gastos e ingresos.
 
-## Development server
+## Tecnologías
+- **Angular 21** (standalone components, signals)
+- **CSS puro** (sin frameworks externos)
+- **Google Fonts**: Syne + DM Sans + JetBrains Mono
 
-To start a local development server, run:
+## Estructura del Proyecto
 
+```
+src/
+├── app/
+│   ├── core/
+│   │   ├── models/           # Interfaces TypeScript (User, Spent, Category, etc.)
+│   │   └── services/         # Servicios HTTP (CRUD genérico + específicos)
+│   ├── shared/
+│   │   └── components/
+│   │       ├── sidebar/       # Sidebar colapsable con navegación
+│   │       ├── navbar/        # Topbar con toggle de tema
+│   │       ├── data-table/    # Tabla genérica con búsqueda
+│   │       └── modal-form/    # Modal reutilizable para formularios
+│   └── features/
+│       ├── dashboard/         # Panel principal con KPIs
+│       ├── spents/            # CRUD Gastos
+│       ├── incomes/           # CRUD Ingresos
+│       ├── categories/        # CRUD Categorías
+│       ├── payments/          # CRUD Métodos de Pago
+│       ├── types/             # CRUD Tipos de Ingreso
+│       └── users/             # CRUD Usuarios
+├── environments/
+│   └── environment.ts         # URL del backend (http://localhost:8080)
+└── styles.css                 # Variables CSS de tema oscuro/claro
+```
+
+## Configuración
+
+1. Ajustar la URL del backend en `src/environments/environment.ts`:
+```typescript
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8080'
+};
+```
+
+2. Instalar y ejecutar:
 ```bash
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Características
+- Tema oscuro/claro con toggle, persiste en localStorage
+- Sidebar colapsable a íconos
+- CRUD completo para todas las entidades del UML
+- Notificaciones toast en cada operación
+- Búsqueda en tiempo real en todas las tablas
+- Lazy loading por módulo de feature
+- Signals de Angular 17+ (sin RxJS en componentes)
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Entidades
+User · Spent · Income · Category · Payment · Type

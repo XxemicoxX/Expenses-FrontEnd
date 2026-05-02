@@ -1,0 +1,124 @@
+.navbar {
+  height: 64px;
+  background: var(--navbar-bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+
+.navbar-left .breadcrumb-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--toggle-bg);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 7px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.theme-icon {
+  font-size: 15px;
+}
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 6px;
+  border-radius: 20px;
+  background: var(--accent-muted);
+  border: 1px solid var(--accent);
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.username {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Toasts */
+.toasts {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 260px;
+  max-width: 380px;
+  animation: slideIn 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+}
+
+@keyframes slideIn {
+  from { transform: translateX(120%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+.toast-success { background: #0f2b1a; border: 1px solid #1db954; color: #1db954; }
+.toast-error   { background: #2b0f0f; border: 1px solid #e05252; color: #e05252; }
+.toast-info    { background: #0f1e2b; border: 1px solid #4a9eff; color: #4a9eff; }
+
+.toast-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+  font-size: 12px;
+  margin-left: auto;
+}

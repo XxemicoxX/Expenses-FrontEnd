@@ -1,0 +1,30 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1 class="page-title">Métodos de Pago</h1>
+    <p class="page-sub">Gestiona los métodos de pago disponibles</p>
+  </div>
+  <app-data-table title="Métodos de Pago" [columns]="columns" [data]="items()" [loading]="loading()"
+    (addItem)="openAdd()" (editItem)="openEdit($event)" (deleteItem)="delete($event)">
+  </app-data-table>
+</div>
+
+<app-modal-form title="Método de Pago" [isEdit]="isEdit()" [visible]="modalVisible()" [form]="form"
+  (submitted)="submit()" (cancelled)="modalVisible.set(false)">
+
+  <div class="field">
+    <label>Nombre *</label>
+    <input type="text" [formControl]="$any(form.get('name'))" placeholder="Ej: Tarjeta Visa" />
+  </div>
+  <div class="field">
+    <label>Tipo *</label>
+    <select [formControl]="$any(form.get('type'))">
+      <option value="">Seleccionar tipo...</option>
+      <option value="efectivo">Efectivo</option>
+      <option value="credito">Tarjeta de Crédito</option>
+      <option value="debito">Tarjeta de Débito</option>
+      <option value="transferencia">Transferencia</option>
+      <option value="otro">Otro</option>
+    </select>
+  </div>
+
+</app-modal-form>

@@ -1,1 +1,174 @@
-/* You can add global styles to this file, and also import other style files */
+/* ============================================
+   FINTRACK — GLOBAL STYLES & THEME VARIABLES
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+/* ─── DARK THEME (default) ─── */
+[data-theme="dark"] {
+  --bg-main:       #0d0f12;
+  --sidebar-bg:    #111318;
+  --navbar-bg:     rgba(13,15,18,0.85);
+  --card-bg:       #161a20;
+  --thead-bg:      #1a1f27;
+  --toggle-bg:     #1a1f27;
+  --input-bg:      #1a1f27;
+  --tag-bg:        #1f2530;
+  --hover-bg:      #1f2530;
+  --row-hover:     rgba(255,255,255,0.03);
+  --accent-muted:  rgba(99,179,237,0.1);
+  --border:        #252c38;
+  --border-subtle: #1e2430;
+  --text-primary:  #edf2f7;
+  --text-secondary:#a0aec0;
+  --text-muted:    #4a5568;
+  --accent:        #63b3ed;
+  --accent-hover:  #90cdf4;
+  --accent-shadow: rgba(99,179,237,0.25);
+}
+
+/* ─── LIGHT THEME ─── */
+[data-theme="light"] {
+  --bg-main:       #f0f4f8;
+  --sidebar-bg:    #ffffff;
+  --navbar-bg:     rgba(255,255,255,0.9);
+  --card-bg:       #ffffff;
+  --thead-bg:      #f7fafc;
+  --toggle-bg:     #f7fafc;
+  --input-bg:      #f7fafc;
+  --tag-bg:        #edf2f7;
+  --hover-bg:      #edf2f7;
+  --row-hover:     rgba(0,0,0,0.02);
+  --accent-muted:  rgba(49,130,206,0.08);
+  --border:        #e2e8f0;
+  --border-subtle: #edf2f7;
+  --text-primary:  #1a202c;
+  --text-secondary:#4a5568;
+  --text-muted:    #a0aec0;
+  --accent:        #3182ce;
+  --accent-hover:  #2c5282;
+  --accent-shadow: rgba(49,130,206,0.2);
+}
+
+/* ─── RESET & BASE ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-main);
+  color: var(--text-primary);
+  transition: background 0.3s, color 0.3s;
+  line-height: 1.6;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* Selection */
+::selection { background: var(--accent); color: #fff; }
+
+/* ─── SHARED FORM FIELDS (used in feature pages) ─── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.field input,
+.field select,
+.field textarea {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  resize: none;
+  width: 100%;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-shadow);
+}
+
+.field select option {
+  background: var(--card-bg);
+  color: var(--text-primary);
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 480px) {
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* ─── PAGE CONTAINER SHARED ─── */
+.page-container {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.page-header { margin-bottom: 0; }
+
+.page-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+  letter-spacing: -0.02em;
+}
+
+.page-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+router-outlet + * {
+  animation: fadeInUp 0.25s ease both;
+}

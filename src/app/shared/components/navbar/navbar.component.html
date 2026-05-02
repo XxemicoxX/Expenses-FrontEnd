@@ -1,0 +1,32 @@
+<header class="navbar">
+  <div class="navbar-left">
+    <div class="breadcrumb-hint">Panel de Control</div>
+  </div>
+
+  <div class="navbar-right">
+    <button class="theme-toggle" (click)="theme.toggle()" [attr.aria-label]="theme.isDark() ? 'Modo claro' : 'Modo oscuro'">
+      @if (theme.isDark()) {
+        <span class="theme-icon">☀</span>
+        <span class="theme-label">Claro</span>
+      } @else {
+        <span class="theme-icon">☾</span>
+        <span class="theme-label">Oscuro</span>
+      }
+    </button>
+
+    <div class="user-chip">
+      <span class="avatar">A</span>
+      <span class="username">Admin</span>
+    </div>
+  </div>
+
+  <!-- Notification toasts -->
+  <div class="toasts">
+    @for (n of notifService.notifications(); track n.id) {
+      <div class="toast" [class]="'toast-' + n.type">
+        <span>{{ n.message }}</span>
+        <button class="toast-close" (click)="notifService.remove(n.id)">✕</button>
+      </div>
+    }
+  </div>
+</header>

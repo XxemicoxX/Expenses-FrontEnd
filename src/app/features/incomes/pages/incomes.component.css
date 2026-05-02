@@ -1,0 +1,68 @@
+.page-container {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.page-header { margin-bottom: 0; }
+
+.page-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+}
+
+.page-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Form field styles shared via global but defined here too */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+
+.field input,
+.field select,
+.field textarea {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+  resize: none;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--accent);
+}
+
+.field select option {
+  background: var(--card-bg);
+  color: var(--text-primary);
+}
