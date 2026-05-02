@@ -23,13 +23,15 @@
   (submitted)="submit()"
   (cancelled)="modalVisible.set(false)">
 
-  <div class="field">
-    <label>Nombre *</label>
-    <input type="text" [formControl]="$any(form.get('name'))" placeholder="Nombre de categoría" />
-  </div>
-  <div class="field">
-    <label>Descripción *</label>
-    <textarea rows="3" [formControl]="$any(form.get('description'))" placeholder="Descripción de la categoría"></textarea>
-  </div>
+  <form [formGroup]="form">
+    <div class="field">
+      <label>Nombre *</label>
+      <input type="text" formControlName="name" placeholder="Nombre de categoría" />
+    </div>
+    <div class="field">
+      <label>Descripción *</label>
+      <textarea rows="3" formControlName="description" placeholder="Descripción de la categoría"></textarea>
+    </div>
+  </form>
 
 </app-modal-form>
