@@ -31,26 +31,26 @@ export class SpentsComponent implements OnInit {
   isEdit = signal(false);
 
   columns: TableColumn[] = [
-    { key: 'id_spent', label: 'ID' },
-    { key: 'name', label: 'Nombre' },
-    { key: 'amount', label: 'Monto', type: 'currency' },
-    { key: 'description', label: 'Descripción' },
-    { key: 'date', label: 'Fecha', type: 'date' },
-    { key: 'hour', label: 'Hora' },
-    { key: 'id_categorie', label: 'Categoría' },
-    { key: 'id_payment_method', label: 'Pago' },
+    { key: 'idSpent',      label: 'ID' },
+    { key: 'name',         label: 'Nombre' },
+    { key: 'amount',       label: 'Monto', type: 'currency' },
+    { key: 'description',  label: 'Descripción' },
+    { key: 'date',         label: 'Fecha', type: 'date' },
+    { key: 'hour',         label: 'Hora' },
+    { key: 'idCategorie',  label: 'Categoría' },
+    { key: 'idPayment',    label: 'Pago' },
   ];
 
   form = this.fb.group({
-    id_spent: [null as number | null],
-    name: ['', Validators.required],
-    amount: [null as number | null, [Validators.required, Validators.min(0)]],
+    idSpent:     [null as number | null],
+    name:        ['', Validators.required],
+    amount:      [null as number | null, [Validators.required, Validators.min(0)]],
     description: ['', Validators.required],
-    date: [''],
-    hour: [''],
-    id_payment_method: [null as number | null, Validators.required],
-    id_categorie: [null as number | null, Validators.required],
-    id_user: [1],
+    date:        [''],
+    hour:        [''],
+    idPayment:   [null as number | null, Validators.required],
+    idCategorie: [null as number | null, Validators.required],
+    idUser:      [1],
   });
 
   ngOnInit() {
@@ -69,7 +69,7 @@ export class SpentsComponent implements OnInit {
 
   openAdd() {
     this.isEdit.set(false);
-    this.form.reset({ id_user: 1 });
+    this.form.reset({ idUser: 1 });
     this.modalVisible.set(true);
   }
 
@@ -82,19 +82,16 @@ export class SpentsComponent implements OnInit {
   submit() {
     if (this.form.invalid) { this.notif.show('Completa todos los campos requeridos', 'error'); return; }
     const val = this.form.value as any;
+    if (!this.isEdit()) delete val.idSpent;
     const action = this.isEdit() ? this.spentSvc.update(val) : this.spentSvc.create(val);
     action.subscribe({
-      next: () => {
-        this.notif.show(this.isEdit() ? 'Gasto actualizado' : 'Gasto creado', 'success');
-        this.modalVisible.set(false);
-        this.load();
-      },
+      next: () => { this.notif.show(this.isEdit() ? 'Gasto actualizado' : 'Gasto creado', 'success'); this.modalVisible.set(false); this.load(); },
       error: () => this.notif.show('Error al guardar', 'error')
     });
   }
 
   delete(row: Spent) {
-    this.spentSvc.delete(row.id_spent).subscribe({
+    this.spentSvc.delete(row.idSpent).subscribe({
       next: () => { this.notif.show('Gasto eliminado', 'success'); this.load(); },
       error: () => this.notif.show('Error al eliminar', 'error')
     });

@@ -25,15 +25,15 @@ export class CategoriesComponent implements OnInit {
   isEdit = signal(false);
 
   columns: TableColumn[] = [
-    { key: 'id_categorie', label: 'ID' },
-    { key: 'name', label: 'Nombre' },
-    { key: 'description', label: 'Descripción' },
+    { key: 'idCategorie',  label: 'ID' },
+    { key: 'name',         label: 'Nombre' },
+    { key: 'description',  label: 'Descripción' },
   ];
 
   form = this.fb.group({
-    id_categorie: [null as number | null],
-    name: ['', Validators.required],
-    description: ['', Validators.required],
+    idCategorie:  [null as number | null],
+    name:         ['', Validators.required],
+    description:  ['', Validators.required],
   });
 
   ngOnInit() { this.load(); }
@@ -53,6 +53,7 @@ export class CategoriesComponent implements OnInit {
   submit() {
     if (this.form.invalid) { this.notif.show('Completa todos los campos', 'error'); return; }
     const val = this.form.value as any;
+    if (!this.isEdit()) delete val.idCategorie;
     const action = this.isEdit() ? this.svc.update(val) : this.svc.create(val);
     action.subscribe({
       next: () => { this.notif.show(this.isEdit() ? 'Categoría actualizada' : 'Categoría creada', 'success'); this.modalVisible.set(false); this.load(); },
@@ -61,7 +62,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   delete(row: Categorie) {
-    this.svc.delete(row.id_categorie).subscribe({
+    this.svc.delete(row.idCategorie).subscribe({
       next: () => { this.notif.show('Categoría eliminada', 'success'); this.load(); },
       error: () => this.notif.show('Error al eliminar', 'error')
     });

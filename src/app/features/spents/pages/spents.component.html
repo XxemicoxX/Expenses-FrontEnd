@@ -54,19 +54,19 @@
     <div class="form-row">
       <div class="field">
         <label>Método de Pago *</label>
-        <select formControlName="id_payment_method">
+        <select formControlName="idPayment">
           <option [ngValue]="null">Seleccionar...</option>
-          @for (p of payments(); track p.id_payment) {
-            <option [value]="p.id_payment">{{ p.name }}</option>
+          @for (p of payments(); track $index) {
+            <option [value]="p.idPayment">{{ p.name }}</option>
           }
         </select>
       </div>
       <div class="field">
         <label>Categoría *</label>
-        <select formControlName="id_categorie">
+        <select formControlName="idCategorie">
           <option [ngValue]="null">Seleccionar...</option>
-          @for (c of categories(); track c.id_categorie) {
-            <option [value]="c.id_categorie">{{ c.name }}</option>
+          @for (c of categories(); track $index) {
+            <option [value]="c.idCategorie">{{ c.name }}</option>
           }
         </select>
       </div>

@@ -1,48 +1,46 @@
 export interface User {
-  id_user: number;
+  idUser: number;
   name: string;
   email: string;
-  password?: string;
+  contrasena?: string;
   role: string;
 }
 
 export interface Categorie {
-  id_categorie: number;
+  idCategorie: number;
   name: string;
   description: string;
 }
 
 export interface Payment {
-  id_payment: number;
+  idPayment: number;
   name: string;
-  type: string;
+  idType: number;
 }
 
 export interface Type {
-  id_type: number;
+  idType: number;
   name: string;
+  description: string;
 }
 
 export interface Spent {
-  id_spent: number;
+  idSpent: number;
   name: string;
   amount: number;
   description: string;
   date: string;
   hour: string;
-  id_payment_method: number;
-  id_categorie: number;
-  id_user: number;
+  idPayment: number;
+  idCategorie: number;
+  idUser: number;
 }
 
 export interface Income {
-  id_income: number;
-  name: string;
+  idIncome: number;
   amount: number;
-  description: string;
-  date: string;
-  hour: string;
   source: string;
-  id_type: number;
-  id_user: number;
+  date: string;
+  description: string;
+  idUser: number;
 }

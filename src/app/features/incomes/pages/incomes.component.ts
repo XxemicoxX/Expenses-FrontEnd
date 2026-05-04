@@ -2,11 +2,10 @@ import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { IncomeService } from '../../../core/services/income.service';
-import { TypeService } from '../../../core/services/type.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { DataTableComponent, TableColumn } from '../../../shared/components/data-table/data-table.component';
 import { ModalFormComponent } from '../../../shared/components/modal-form/modal-form.component';
-import { Income, Type } from '../../../core/models';
+import { Income } from '../../../core/models';
 
 @Component({
   selector: 'app-incomes',
@@ -17,41 +16,32 @@ import { Income, Type } from '../../../core/models';
 })
 export class IncomesComponent implements OnInit {
   private svc = inject(IncomeService);
-  private typeSvc = inject(TypeService);
   private notif = inject(NotificationService);
   private fb = inject(FormBuilder);
 
   items = signal<Income[]>([]);
-  types = signal<Type[]>([]);
   loading = signal(false);
   modalVisible = signal(false);
   isEdit = signal(false);
 
   columns: TableColumn[] = [
-    { key: 'id_income', label: 'ID' },
-    { key: 'name', label: 'Nombre' },
+    { key: 'idIncome', label: 'ID' },
     { key: 'amount', label: 'Monto', type: 'currency' },
-    { key: 'description', label: 'Descripción' },
     { key: 'source', label: 'Fuente' },
+    { key: 'description', label: 'Descripción' },
     { key: 'date', label: 'Fecha', type: 'date' },
   ];
 
   form = this.fb.group({
-    id_income: [null as number | null],
-    name: ['', Validators.required],
+    idIncome: [null as number | null],
     amount: [null as number | null, [Validators.required, Validators.min(0)]],
-    description: ['', Validators.required],
-    date: [''],
-    hour: [''],
     source: ['', Validators.required],
-    id_type: [null as number | null, Validators.required],
-    id_user: [1],
+    date: [''],
+    description: ['', Validators.required],
+    idUser: [1, Validators.required],
   });
 
-  ngOnInit() {
-    this.load();
-    this.typeSvc.getAll().subscribe({ next: d => this.types.set(d), error: () => {} });
-  }
+  ngOnInit() { this.load(); }
 
   load() {
     this.loading.set(true);
@@ -61,21 +51,48 @@ export class IncomesComponent implements OnInit {
     });
   }
 
-  openAdd() { this.isEdit.set(false); this.form.reset({ id_user: 1 }); this.modalVisible.set(true); }
+  openAdd() {
+    this.isEdit.set(false);
+    this.form.reset({ idUser: 1 });
+    this.modalVisible.set(true);
+  }
+
   openEdit(row: Income) { this.isEdit.set(true); this.form.patchValue(row); this.modalVisible.set(true); }
 
   submit() {
     if (this.form.invalid) { this.notif.show('Completa todos los campos requeridos', 'error'); return; }
     const val = this.form.value as any;
-    const action = this.isEdit() ? this.svc.update(val) : this.svc.create(val);
-    action.subscribe({
-      next: () => { this.notif.show(this.isEdit() ? 'Ingreso actualizado' : 'Ingreso creado', 'success'); this.modalVisible.set(false); this.load(); },
-      error: () => this.notif.show('Error al guardar', 'error')
-    });
+
+    if (this.isEdit()) {
+      const payload = {
+        idIncome: Number(val.idIncome),
+        amount: Number(val.amount),
+        source: val.source,
+        date: val.date || null,
+        description: val.description,
+        idUser: Number(val.idUser)
+      };
+      this.svc.update(payload as any).subscribe({
+        next: () => { this.notif.show('Ingreso actualizado', 'success'); this.modalVisible.set(false); this.load(); },
+        error: () => this.notif.show('Error al guardar', 'error')
+      });
+    } else {
+      const payload = {
+        amount: Number(val.amount),
+        source: val.source,
+        date: val.date || null,
+        description: val.description,
+        idUser: Number(val.idUser)
+      };
+      this.svc.create(payload as any).subscribe({
+        next: () => { this.notif.show('Ingreso creado', 'success'); this.modalVisible.set(false); this.load(); },
+        error: () => this.notif.show('Error al guardar', 'error')
+      });
+    }
   }
 
   delete(row: Income) {
-    this.svc.delete(row.id_income).subscribe({
+    this.svc.delete(row.idIncome).subscribe({
       next: () => { this.notif.show('Ingreso eliminado', 'success'); this.load(); },
       error: () => this.notif.show('Error al eliminar', 'error')
     });

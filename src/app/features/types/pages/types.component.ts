@@ -25,13 +25,15 @@ export class TypesComponent implements OnInit {
   isEdit = signal(false);
 
   columns: TableColumn[] = [
-    { key: 'id_type', label: 'ID' },
+    { key: 'idType', label: 'ID' },
     { key: 'name', label: 'Nombre' },
+    { key: 'description', label: 'Descripción' },
   ];
 
   form = this.fb.group({
-    id_type: [null as number | null],
+    idType: [null as number | null],
     name: ['', Validators.required],
+    description: ['', Validators.required],
   });
 
   ngOnInit() { this.load(); }
@@ -45,20 +47,37 @@ export class TypesComponent implements OnInit {
   }
 
   openAdd() { this.isEdit.set(false); this.form.reset(); this.modalVisible.set(true); }
+
   openEdit(row: Type) { this.isEdit.set(true); this.form.patchValue(row); this.modalVisible.set(true); }
 
   submit() {
     if (this.form.invalid) { this.notif.show('Completa todos los campos', 'error'); return; }
     const val = this.form.value as any;
-    const action = this.isEdit() ? this.svc.update(val) : this.svc.create(val);
-    action.subscribe({
-      next: () => { this.notif.show('Tipo guardado', 'success'); this.modalVisible.set(false); this.load(); },
-      error: () => this.notif.show('Error al guardar', 'error')
-    });
+
+    if (this.isEdit()) {
+      const payload = {
+        idType: Number(val.idType),
+        name: val.name,
+        description: val.description
+      };
+      this.svc.update(payload as any).subscribe({
+        next: () => { this.notif.show('Tipo actualizado', 'success'); this.modalVisible.set(false); this.load(); },
+        error: () => this.notif.show('Error al guardar', 'error')
+      });
+    } else {
+      const payload = {
+        name: val.name,
+        description: val.description
+      };
+      this.svc.create(payload as any).subscribe({
+        next: () => { this.notif.show('Tipo creado', 'success'); this.modalVisible.set(false); this.load(); },
+        error: () => this.notif.show('Error al guardar', 'error')
+      });
+    }
   }
 
   delete(row: Type) {
-    this.svc.delete(row.id_type).subscribe({
+    this.svc.delete(row.idType).subscribe({
       next: () => { this.notif.show('Tipo eliminado', 'success'); this.load(); },
       error: () => this.notif.show('Error al eliminar', 'error')
     });

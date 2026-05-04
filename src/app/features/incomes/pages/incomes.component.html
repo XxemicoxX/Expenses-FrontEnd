@@ -26,12 +26,12 @@
   <form [formGroup]="form">
     <div class="form-row">
       <div class="field">
-        <label>Nombre *</label>
-        <input type="text" formControlName="name" placeholder="Nombre del ingreso" />
-      </div>
-      <div class="field">
         <label>Monto *</label>
         <input type="number" formControlName="amount" placeholder="0.00" step="0.01" />
+      </div>
+      <div class="field">
+        <label>Fuente *</label>
+        <input type="text" formControlName="source" placeholder="Ej: Salario, Freelance..." />
       </div>
     </div>
 
@@ -41,29 +41,8 @@
     </div>
 
     <div class="field">
-      <label>Fuente *</label>
-      <input type="text" formControlName="source" placeholder="Ej: Salario, Freelance..." />
-    </div>
-
-    <div class="form-row">
-      <div class="field">
-        <label>Fecha</label>
-        <input type="date" formControlName="date" />
-      </div>
-      <div class="field">
-        <label>Hora</label>
-        <input type="time" formControlName="hour" />
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Tipo *</label>
-      <select formControlName="id_type">
-        <option [ngValue]="null">Seleccionar tipo...</option>
-        @for (t of types(); track t.id_type) {
-          <option [value]="t.id_type">{{ t.name }}</option>
-        }
-      </select>
+      <label>Fecha</label>
+      <input type="date" formControlName="date" />
     </div>
   </form>
 
