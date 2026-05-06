@@ -25,18 +25,18 @@ export class UsersComponent implements OnInit {
   isEdit = signal(false);
 
   columns: TableColumn[] = [
-    { key: 'idUser',  label: 'ID' },
-    { key: 'name',    label: 'Nombre' },
-    { key: 'email',   label: 'Email' },
-    { key: 'role',    label: 'Rol' },
+    { key: 'idUser', label: 'ID' },
+    { key: 'name', label: 'Nombre' },
+    { key: 'email', label: 'Email' },
+    { key: 'role', label: 'Rol' },
   ];
 
   form = this.fb.group({
-    idUser:   [null as number | null],
-    name:     ['', Validators.required],
-    email:    ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required],
-    role:     ['USER', Validators.required],
+    id_user: [null as number | null],
+    name: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    password: [''],
+    role: ['USER', Validators.required],
   });
 
   ngOnInit() { this.load(); }
@@ -50,13 +50,11 @@ export class UsersComponent implements OnInit {
   }
 
   openAdd() { this.isEdit.set(false); this.form.reset({ role: 'USER' }); this.modalVisible.set(true); }
-
   openEdit(row: User) { this.isEdit.set(true); this.form.patchValue(row); this.modalVisible.set(true); }
 
   submit() {
     if (this.form.invalid) { this.notif.show('Completa todos los campos requeridos', 'error'); return; }
     const val = this.form.value as any;
-    if (!this.isEdit()) delete val.idUser;
     const action = this.isEdit() ? this.svc.update(val) : this.svc.create(val);
     action.subscribe({
       next: () => { this.notif.show(this.isEdit() ? 'Usuario actualizado' : 'Usuario creado', 'success'); this.modalVisible.set(false); this.load(); },

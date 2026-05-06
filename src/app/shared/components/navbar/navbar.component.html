@@ -4,7 +4,7 @@
   </div>
 
   <div class="navbar-right">
-    <button class="theme-toggle" (click)="theme.toggle()" [attr.aria-label]="theme.isDark() ? 'Modo claro' : 'Modo oscuro'">
+    <button class="theme-toggle" (click)="theme.toggle()">
       @if (theme.isDark()) {
         <span class="theme-icon">☀</span>
         <span class="theme-label">Claro</span>
@@ -14,10 +14,17 @@
       }
     </button>
 
-    <div class="user-chip">
-      <span class="avatar">A</span>
-      <span class="username">Admin</span>
+    <div class="user-info">
+      <div class="avatar">{{ userInitial }}</div>
+      <div class="user-details">
+        <span class="username">{{ userName }}</span>
+        <span class="user-role">{{ userRole }}</span>
+      </div>
     </div>
+
+    <button class="logout-btn" (click)="auth.logout()" title="Cerrar sesión">
+      <span>⏻</span>
+    </button>
   </div>
 
   <!-- Notification toasts -->

@@ -4,9 +4,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": ["zone.js"],
-    "target": "ES2022",
-    "useDefineForClassFields": false
+    "types": ["zone.js"]
   },
   "include": [
     "src/**/*.ts"

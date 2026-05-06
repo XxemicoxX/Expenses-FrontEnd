@@ -23,7 +23,7 @@
   (submitted)="submit()"
   (cancelled)="modalVisible.set(false)">
 
-  <form [formGroup]="form">
+  <div [formGroup]="form">
     <div class="form-row">
       <div class="field">
         <label>Monto *</label>
@@ -35,15 +35,15 @@
       </div>
     </div>
 
-    <div class="field">
+    <div class="field" style="margin-top:16px">
       <label>Descripción *</label>
       <textarea rows="2" formControlName="description" placeholder="Descripción breve"></textarea>
     </div>
 
-    <div class="field">
+    <div class="field" style="margin-top:16px">
       <label>Fecha</label>
       <input type="date" formControlName="date" />
     </div>
-  </form>
+  </div>
 
 </app-modal-form>

@@ -72,7 +72,7 @@
     @if (recentSpents().length === 0) {
       <div class="empty-recent">No hay gastos registrados aún</div>
     } @else {
-      @for (s of recentSpents(); track s.id_spent) {
+      @for (s of recentSpents(); track s.idSpent) {
         <div class="recent-row">
           <div class="recent-info">
             <span class="recent-name">{{ s.name }}</span>

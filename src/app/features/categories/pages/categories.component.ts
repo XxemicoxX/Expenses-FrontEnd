@@ -1,7 +1,7 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { CategorieService } from '../../../core/services/categorie.service';
+import { CategorieService } from '../../../core/services/category.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { DataTableComponent, TableColumn } from '../../../shared/components/data-table/data-table.component';
 import { ModalFormComponent } from '../../../shared/components/modal-form/modal-form.component';
@@ -48,17 +48,33 @@ export class CategoriesComponent implements OnInit {
 
   openAdd() { this.isEdit.set(false); this.form.reset(); this.modalVisible.set(true); }
 
-  openEdit(row: Categorie) { this.isEdit.set(true); this.form.patchValue(row); this.modalVisible.set(true); }
+  openEdit(row: Categorie) {
+    this.isEdit.set(true);
+    this.form.patchValue({
+      idCategorie:  row.idCategorie,
+      name:         row.name,
+      description:  row.description
+    });
+    this.modalVisible.set(true);
+  }
 
   submit() {
     if (this.form.invalid) { this.notif.show('Completa todos los campos', 'error'); return; }
     const val = this.form.value as any;
-    if (!this.isEdit()) delete val.idCategorie;
-    const action = this.isEdit() ? this.svc.update(val) : this.svc.create(val);
-    action.subscribe({
-      next: () => { this.notif.show(this.isEdit() ? 'Categoría actualizada' : 'Categoría creada', 'success'); this.modalVisible.set(false); this.load(); },
-      error: () => this.notif.show('Error al guardar', 'error')
-    });
+
+    if (this.isEdit()) {
+      const payload = { idCategorie: Number(val.idCategorie), name: val.name, description: val.description };
+      this.svc.update(payload as any).subscribe({
+        next: () => { this.notif.show('Categoría actualizada', 'success'); this.modalVisible.set(false); this.load(); },
+        error: () => this.notif.show('Error al guardar', 'error')
+      });
+    } else {
+      const payload = { name: val.name, description: val.description };
+      this.svc.create(payload as any).subscribe({
+        next: () => { this.notif.show('Categoría creada', 'success'); this.modalVisible.set(false); this.load(); },
+        error: () => this.notif.show('Error al guardar', 'error')
+      });
+    }
   }
 
   delete(row: Categorie) {

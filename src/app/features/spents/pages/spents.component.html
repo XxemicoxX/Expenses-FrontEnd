@@ -23,54 +23,52 @@
   (submitted)="submit()"
   (cancelled)="modalVisible.set(false)">
 
-  <form [formGroup]="form">
-    <div class="form-row">
-      <div class="field">
-        <label>Nombre *</label>
-        <input type="text" formControlName="name" placeholder="Nombre del gasto" />
-      </div>
-      <div class="field">
-        <label>Monto *</label>
-        <input type="number" formControlName="amount" placeholder="0.00" step="0.01" />
-      </div>
-    </div>
-
+  <div class="form-row">
     <div class="field">
-      <label>Descripción *</label>
-      <textarea formControlName="description" rows="2" placeholder="Descripción breve"></textarea>
+      <label>Nombre *</label>
+      <input type="text" formControlName="name" placeholder="Nombre del gasto" [formControl]="$any(form.get('name'))" />
     </div>
+    <div class="field">
+      <label>Monto *</label>
+      <input type="number" formControlName="amount" placeholder="0.00" step="0.01" [formControl]="$any(form.get('amount'))" />
+    </div>
+  </div>
 
-    <div class="form-row">
-      <div class="field">
-        <label>Fecha</label>
-        <input type="date" formControlName="date" />
-      </div>
-      <div class="field">
-        <label>Hora</label>
-        <input type="time" formControlName="hour" />
-      </div>
-    </div>
+  <div class="field">
+    <label>Descripción *</label>
+    <textarea formControlName="description" rows="2" placeholder="Descripción breve" [formControl]="$any(form.get('description'))"></textarea>
+  </div>
 
-    <div class="form-row">
-      <div class="field">
-        <label>Método de Pago *</label>
-        <select formControlName="idPayment">
-          <option [ngValue]="null">Seleccionar...</option>
-          @for (p of payments(); track $index) {
-            <option [value]="p.idPayment">{{ p.name }}</option>
-          }
-        </select>
-      </div>
-      <div class="field">
-        <label>Categoría *</label>
-        <select formControlName="idCategorie">
-          <option [ngValue]="null">Seleccionar...</option>
-          @for (c of categories(); track $index) {
-            <option [value]="c.idCategorie">{{ c.name }}</option>
-          }
-        </select>
-      </div>
+  <div class="form-row">
+    <div class="field">
+      <label>Fecha</label>
+      <input type="date" formControlName="date" [formControl]="$any(form.get('date'))" />
     </div>
-  </form>
+    <div class="field">
+      <label>Hora</label>
+      <input type="time" formControlName="hour" [formControl]="$any(form.get('hour'))" />
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="field">
+      <label>Método de Pago *</label>
+      <select formControlName="id_payment_method" [formControl]="$any(form.get('id_payment_method'))">
+        <option [ngValue]="null">Seleccionar...</option>
+        @for (p of payments(); track p.idPayment) {
+          <option [value]="p.idPayment">{{ p.name }}</option>
+        }
+      </select>
+    </div>
+    <div class="field">
+      <label>Categoría *</label>
+      <select formControlName="id_categorie" [formControl]="$any(form.get('id_categorie'))">
+        <option [ngValue]="null">Seleccionar...</option>
+        @for (c of categories(); track c.idCategorie) {
+          <option [value]="c.idCategorie">{{ c.name }}</option>
+        }
+      </select>
+    </div>
+  </div>
 
 </app-modal-form>

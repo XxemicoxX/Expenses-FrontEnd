@@ -3,51 +3,34 @@
     <h1 class="page-title">Usuarios</h1>
     <p class="page-sub">Gestión de usuarios del sistema</p>
   </div>
-
-  <app-data-table
-    title="Usuarios"
-    [columns]="columns"
-    [data]="items()"
-    [loading]="loading()"
-    (addItem)="openAdd()"
-    (editItem)="openEdit($event)"
-    (deleteItem)="delete($event)">
+  <app-data-table title="Usuarios" [columns]="columns" [data]="items()" [loading]="loading()"
+    (addItem)="openAdd()" (editItem)="openEdit($event)" (deleteItem)="delete($event)">
   </app-data-table>
 </div>
 
-<app-modal-form
-  title="Usuario"
-  [isEdit]="isEdit()"
-  [visible]="modalVisible()"
-  [form]="form"
-  (submitted)="submit()"
-  (cancelled)="modalVisible.set(false)">
-
-  <form [formGroup]="form">
-    <div class="form-row">
-      <div class="field">
-        <label>Nombre *</label>
-        <input type="text" formControlName="name" placeholder="Nombre completo" />
-      </div>
-      <div class="field">
-        <label>Email *</label>
-        <input type="email" formControlName="email" placeholder="correo@ejemplo.com" />
-      </div>
+<app-modal-form title="Usuario" [isEdit]="isEdit()" [visible]="modalVisible()" [form]="form"
+  (submitted)="submit()" (cancelled)="modalVisible.set(false)">
+  <div class="form-row">
+    <div class="field">
+      <label>Nombre *</label>
+      <input type="text" [formControl]="$any(form.get('name'))" placeholder="Nombre completo" />
     </div>
-
-    <div class="form-row">
-      <div class="field">
-        <label>Contraseña</label>
-        <input type="password" formControlName="password" placeholder="••••••••" />
-      </div>
-      <div class="field">
-        <label>Rol *</label>
-        <select formControlName="role">
-          <option value="USER">Usuario</option>
-          <option value="ADMIN">Administrador</option>
-        </select>
-      </div>
+    <div class="field">
+      <label>Email *</label>
+      <input type="email" [formControl]="$any(form.get('email'))" placeholder="correo@ejemplo.com" />
     </div>
-  </form>
-
+  </div>
+  <div class="form-row">
+    <div class="field">
+      <label>Contraseña {{ isEdit() ? '(dejar vacío para no cambiar)' : '*' }}</label>
+      <input type="password" [formControl]="$any(form.get('password'))" placeholder="••••••••" />
+    </div>
+    <div class="field">
+      <label>Rol *</label>
+      <select [formControl]="$any(form.get('role'))">
+        <option value="USER">Usuario</option>
+        <option value="ADMIN">Administrador</option>
+      </select>
+    </div>
+  </div>
 </app-modal-form>

@@ -1,0 +1,66 @@
+<div class="auth-shell">
+  <div class="auth-left">
+    <div class="brand">
+      <span class="brand-icon">⬡</span>
+      <span class="brand-name">FinTrack</span>
+    </div>
+    <div class="auth-hero">
+      <h1>Gestiona tus finanzas con precisión</h1>
+      <p>Controla gastos, ingresos y mucho más desde un solo lugar.</p>
+    </div>
+    <div class="auth-stats">
+      <div class="stat"><span class="stat-value">100%</span><span class="stat-label">Seguro</span></div>
+      <div class="stat"><span class="stat-value">∞</span><span class="stat-label">Registros</span></div>
+      <div class="stat"><span class="stat-value">24/7</span><span class="stat-label">Disponible</span></div>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-card">
+      <div class="auth-card-header">
+        <button class="theme-btn" (click)="theme.toggle()">
+          {{ theme.isDark() ? '☀' : '☾' }}
+        </button>
+      </div>
+
+      <h2 class="auth-title">Iniciar sesión</h2>
+      <p class="auth-sub">Bienvenido de vuelta</p>
+
+      @if (error()) {
+        <div class="alert-error">{{ error() }}</div>
+      }
+
+      <div [formGroup]="form" class="auth-form">
+        <div class="field">
+          <label>Correo electrónico</label>
+          <input type="email" formControlName="email" placeholder="correo@ejemplo.com" autocomplete="email" />
+        </div>
+
+        <div class="field">
+          <label>Contraseña</label>
+          <div class="input-eye">
+            <input [type]="showPassword() ? 'text' : 'password'"
+                   formControlName="contrasena"
+                   placeholder="••••••••"
+                   autocomplete="current-password" />
+            <button type="button" class="eye-btn" (click)="showPassword.update(v => !v)">
+              {{ showPassword() ? '🙈' : '👁' }}
+            </button>
+          </div>
+        </div>
+
+        <button class="btn-primary" (click)="submit()" [disabled]="loading()">
+          @if (loading()) {
+            <span class="btn-spinner"></span> Ingresando...
+          } @else {
+            Ingresar
+          }
+        </button>
+      </div>
+
+      <p class="auth-switch">
+        ¿No tienes cuenta? <a routerLink="/register">Regístrate</a>
+      </p>
+    </div>
+  </div>
+</div>

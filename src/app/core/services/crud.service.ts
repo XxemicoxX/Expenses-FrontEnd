@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
@@ -12,9 +12,7 @@ export abstract class CrudService<T, W = T> {
   }
 
   getAll(): Observable<T[]> {
-    return this.http.get<T[]>(this.baseUrl).pipe(
-      map(data => data ?? [])
-    );
+    return this.http.get<T[]>(this.baseUrl);
   }
 
   getById(id: number): Observable<T> {

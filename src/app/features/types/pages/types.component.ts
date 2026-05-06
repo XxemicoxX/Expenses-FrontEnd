@@ -27,13 +27,11 @@ export class TypesComponent implements OnInit {
   columns: TableColumn[] = [
     { key: 'idType', label: 'ID' },
     { key: 'name', label: 'Nombre' },
-    { key: 'description', label: 'Descripción' },
   ];
 
   form = this.fb.group({
-    idType: [null as number | null],
+    id_type: [null as number | null],
     name: ['', Validators.required],
-    description: ['', Validators.required],
   });
 
   ngOnInit() { this.load(); }
@@ -47,33 +45,16 @@ export class TypesComponent implements OnInit {
   }
 
   openAdd() { this.isEdit.set(false); this.form.reset(); this.modalVisible.set(true); }
-
   openEdit(row: Type) { this.isEdit.set(true); this.form.patchValue(row); this.modalVisible.set(true); }
 
   submit() {
     if (this.form.invalid) { this.notif.show('Completa todos los campos', 'error'); return; }
     const val = this.form.value as any;
-
-    if (this.isEdit()) {
-      const payload = {
-        idType: Number(val.idType),
-        name: val.name,
-        description: val.description
-      };
-      this.svc.update(payload as any).subscribe({
-        next: () => { this.notif.show('Tipo actualizado', 'success'); this.modalVisible.set(false); this.load(); },
-        error: () => this.notif.show('Error al guardar', 'error')
-      });
-    } else {
-      const payload = {
-        name: val.name,
-        description: val.description
-      };
-      this.svc.create(payload as any).subscribe({
-        next: () => { this.notif.show('Tipo creado', 'success'); this.modalVisible.set(false); this.load(); },
-        error: () => this.notif.show('Error al guardar', 'error')
-      });
-    }
+    const action = this.isEdit() ? this.svc.update(val) : this.svc.create(val);
+    action.subscribe({
+      next: () => { this.notif.show('Tipo guardado', 'success'); this.modalVisible.set(false); this.load(); },
+      error: () => this.notif.show('Error al guardar', 'error')
+    });
   }
 
   delete(row: Type) {
