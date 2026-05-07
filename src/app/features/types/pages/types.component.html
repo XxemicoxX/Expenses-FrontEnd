@@ -14,4 +14,8 @@
     <label>Nombre *</label>
     <input type="text" [formControl]="$any(form.get('name'))" placeholder="Nombre del tipo" />
   </div>
+  <div class="field">
+    <label>Descripción *</label>
+    <input type="text" [formControl]="$any(form.get('description'))" placeholder="Descripción del tipo" />
+  </div>
 </app-modal-form>

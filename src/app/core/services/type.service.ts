@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CrudService } from './crud.service';
-import { Type } from '../models';
+import { IncomeType } from '../models';
 
 @Injectable({ providedIn: 'root' })
-export class TypeService extends CrudService<Type> {
+export class TypeService extends CrudService<IncomeType> {
   protected override endpoint = 'type';
 }

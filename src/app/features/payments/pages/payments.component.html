@@ -17,13 +17,11 @@
   </div>
   <div class="field">
     <label>Tipo *</label>
-    <select [formControl]="$any(form.get('type'))">
-      <option value="">Seleccionar tipo...</option>
-      <option value="efectivo">Efectivo</option>
-      <option value="credito">Tarjeta de Crédito</option>
-      <option value="debito">Tarjeta de Débito</option>
-      <option value="transferencia">Transferencia</option>
-      <option value="otro">Otro</option>
+    <select [formControl]="$any(form.get('idType'))">
+      <option [ngValue]="null">Seleccionar tipo...</option>
+      @for (t of types(); track t.idType) {
+        <option [value]="t.idType">{{ t.name }}</option>
+      }
     </select>
   </div>
 

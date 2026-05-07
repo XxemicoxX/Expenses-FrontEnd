@@ -4,23 +4,12 @@
     <p class="page-sub">Registra y gestiona todos tus ingresos</p>
   </div>
 
-  <app-data-table
-    title="Ingresos"
-    [columns]="columns"
-    [data]="items()"
-    [loading]="loading()"
-    (addItem)="openAdd()"
-    (editItem)="openEdit($event)"
-    (deleteItem)="delete($event)">
+  <app-data-table title="Ingresos" [columns]="columns" [data]="items()" [loading]="loading()" (addItem)="openAdd()"
+    (editItem)="openEdit($event)" (deleteItem)="delete($event)">
   </app-data-table>
 </div>
 
-<app-modal-form
-  title="Ingreso"
-  [isEdit]="isEdit()"
-  [visible]="modalVisible()"
-  [form]="form"
-  (submitted)="submit()"
+<app-modal-form title="Ingreso" [isEdit]="isEdit()" [visible]="modalVisible()" [form]="form" (submitted)="submit()"
   (cancelled)="modalVisible.set(false)">
 
   <div [formGroup]="form">
@@ -40,9 +29,9 @@
       <textarea rows="2" formControlName="description" placeholder="Descripción breve"></textarea>
     </div>
 
-    <div class="field" style="margin-top:16px">
+    <div class="field">
       <label>Fecha</label>
-      <input type="date" formControlName="date" />
+      <app-datepicker formControlName="date"></app-datepicker>
     </div>
   </div>
 

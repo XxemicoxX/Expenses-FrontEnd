@@ -18,7 +18,7 @@ export interface Payment {
   idType: number;
 }
 
-export interface Type {
+export interface IncomeType {
   idType: number;
   name: string;
   description: string;

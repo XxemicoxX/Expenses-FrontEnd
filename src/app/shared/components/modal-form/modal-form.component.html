@@ -1,6 +1,6 @@
 @if (visible) {
   <div class="modal-overlay" (click)="cancelled.emit()">
-    <div class="modal-panel" (click)="$event.stopPropagation()">
+    <div class="modal-panel" (click)="$event.stopPropagation()" (keydown.enter)="submitted.emit()">
       <div class="modal-header">
         <h3 class="modal-title">{{ isEdit ? 'Editar' : 'Nuevo' }} {{ title }}</h3>
         <button class="modal-close" (click)="cancelled.emit()">✕</button>

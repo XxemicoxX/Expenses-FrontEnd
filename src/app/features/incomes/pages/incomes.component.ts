@@ -7,11 +7,12 @@ import { AuthService } from '../../../core/services/auth.service';
 import { DataTableComponent, TableColumn } from '../../../shared/components/data-table/data-table.component';
 import { ModalFormComponent } from '../../../shared/components/modal-form/modal-form.component';
 import { Income } from '../../../core/models';
+import { CustomDatepickerComponent } from '../../../shared/components/custom-datepicker/custom-datepicker';
 
 @Component({
   selector: 'app-incomes',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, DataTableComponent, ModalFormComponent],
+  imports: [CommonModule, ReactiveFormsModule, DataTableComponent, ModalFormComponent, CustomDatepickerComponent],
   templateUrl: './incomes.component.html',
   styleUrls: ['./incomes.component.css']
 })

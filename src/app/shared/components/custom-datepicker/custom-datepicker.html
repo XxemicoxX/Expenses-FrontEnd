@@ -1,0 +1,31 @@
+<div class="dp-wrapper" (clickOutside)="close()">
+    <div class="dp-input" #trigger (click)="toggle()" [class.dp-open]="open()">
+        <span class="dp-icon">📅</span>
+        <span [class.dp-placeholder]="!selected()">
+            {{ displayValue() || 'Seleccionar fecha' }}
+        </span>
+        <span class="dp-chevron" [class.rotated]="open()">▾</span>
+    </div>
+
+    @if (open()) {
+    <div class="dp-calendar" [style.top.px]="calendarTop()" [style.left.px]="calendarLeft()"
+        [style.width.px]="calendarWidth()">
+        <div class="dp-header">
+            <button type="button" class="dp-nav" (click)="prevMonth()">‹</button>
+            <span class="dp-month-label">{{ MONTHS[viewMonth()] }} {{ viewYear() }}</span>
+            <button type="button" class="dp-nav" (click)="nextMonth()">›</button>
+        </div>
+        <div class="dp-grid dp-weekdays">
+            @for (d of DAYS; track d) { <span>{{ d }}</span> }
+        </div>
+        <div class="dp-grid dp-days">
+            @for (day of days(); track $index) {
+            <button type="button" class="dp-day" [class.dp-selected]="isSelected(day)" [class.dp-today]="isToday(day)"
+                [class.dp-empty]="!day" (click)="selectDay(day)">
+                {{ day || '' }}
+            </button>
+            }
+        </div>
+    </div>
+    }
+</div>

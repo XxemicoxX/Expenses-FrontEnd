@@ -17,7 +17,15 @@ export interface TableColumn {
 })
 export class DataTableComponent {
   @Input() columns: TableColumn[] = [];
-  @Input() data: any[] = [];
+
+  private _data: any[] = [];
+  @Input() set data(value: any[]) {
+    this._data = value ?? [];
+  }
+  get data(): any[] {
+    return this._data;
+  }
+  
   @Input() title = 'Registros';
   @Input() loading = false;
   @Output() editItem = new EventEmitter<any>();
@@ -27,9 +35,10 @@ export class DataTableComponent {
   searchQuery = signal('');
 
   get filtered(): any[] {
+    const items = this.data ?? []; // ← guard aquí
     const q = this.searchQuery().toLowerCase();
-    if (!q) return this.data;
-    return this.data.filter(row =>
+    if (!q) return items;
+    return items.filter(row =>
       Object.values(row).some(v => String(v).toLowerCase().includes(q))
     );
   }

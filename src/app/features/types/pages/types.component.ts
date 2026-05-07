@@ -5,7 +5,7 @@ import { TypeService } from '../../../core/services/type.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { DataTableComponent, TableColumn } from '../../../shared/components/data-table/data-table.component';
 import { ModalFormComponent } from '../../../shared/components/modal-form/modal-form.component';
-import { Type } from '../../../core/models';
+import { IncomeType } from '../../../core/models';
 
 @Component({
   selector: 'app-types',
@@ -19,7 +19,7 @@ export class TypesComponent implements OnInit {
   private notif = inject(NotificationService);
   private fb = inject(FormBuilder);
 
-  items = signal<Type[]>([]);
+  items = signal<IncomeType[]>([]);
   loading = signal(false);
   modalVisible = signal(false);
   isEdit = signal(false);
@@ -30,8 +30,9 @@ export class TypesComponent implements OnInit {
   ];
 
   form = this.fb.group({
-    id_type: [null as number | null],
+    idType: [null as number | null],
     name: ['', Validators.required],
+    description: ['', Validators.required],
   });
 
   ngOnInit() { this.load(); }
@@ -45,7 +46,7 @@ export class TypesComponent implements OnInit {
   }
 
   openAdd() { this.isEdit.set(false); this.form.reset(); this.modalVisible.set(true); }
-  openEdit(row: Type) { this.isEdit.set(true); this.form.patchValue(row); this.modalVisible.set(true); }
+  openEdit(row: IncomeType) { this.isEdit.set(true); this.form.patchValue(row); this.modalVisible.set(true); }
 
   submit() {
     if (this.form.invalid) { this.notif.show('Completa todos los campos', 'error'); return; }
@@ -57,7 +58,7 @@ export class TypesComponent implements OnInit {
     });
   }
 
-  delete(row: Type) {
+  delete(row: IncomeType) {
     this.svc.delete(row.idType).subscribe({
       next: () => { this.notif.show('Tipo eliminado', 'success'); this.load(); },
       error: () => this.notif.show('Error al eliminar', 'error')

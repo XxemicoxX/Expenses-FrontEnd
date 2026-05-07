@@ -32,19 +32,21 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.spentSvc.getAll().subscribe({
       next: data => {
-        this.spentCount.set(data.length);
-        this.totalSpents.set(data.reduce((a, b) => a + b.amount, 0));
-        this.recentSpents.set(data.slice(-5).reverse());
+        const spents = data ?? [];
+        this.spentCount.set(spents.length);
+        this.totalSpents.set(spents.reduce((a, b) => a + b.amount, 0));
+        this.recentSpents.set(spents.slice(-5).reverse());
       },
-      error: () => {}
+      error: () => { }
     });
 
     this.incomeSvc.getAll().subscribe({
       next: data => {
-        this.incomeCount.set(data.length);
-        this.totalIncomes.set(data.reduce((a, b) => a + b.amount, 0));
+        const incomes = data ?? [];
+        this.incomeCount.set(incomes.length);
+        this.totalIncomes.set(incomes.reduce((a, b) => a + b.amount, 0));
       },
-      error: () => {}
+      error: () => { }
     });
   }
 
