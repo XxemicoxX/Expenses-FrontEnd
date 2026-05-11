@@ -28,6 +28,6 @@ export abstract class CrudService<T, W = T> {
   }
 
   delete(id: number): Observable<string> {
-    return this.http.delete<string>(`${this.baseUrl}/${id}`);
-  }
+  return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+}
 }

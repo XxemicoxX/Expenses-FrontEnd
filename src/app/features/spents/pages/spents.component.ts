@@ -2,7 +2,6 @@ import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { SpentService } from '../../../core/services/spent.service';
-import { CategorieService } from '../../../core/services/category.service';
 import { PaymentService } from '../../../core/services/payment.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { AuthService } from '../../../core/services/auth.service';
@@ -11,11 +10,12 @@ import { ModalFormComponent } from '../../../shared/components/modal-form/modal-
 import { Spent, Categorie, Payment } from '../../../core/models';
 import { forkJoin } from 'rxjs';
 import { CustomDatepickerComponent } from '../../../shared/components/custom-datepicker/custom-datepicker';
+import { CategorieService } from '../../../core/services/categorie.service';
 
 @Component({
   selector: 'app-spents',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, DataTableComponent, ModalFormComponent,CustomDatepickerComponent],
+  imports: [CommonModule, ReactiveFormsModule, DataTableComponent, ModalFormComponent, CustomDatepickerComponent],
   templateUrl: './spents.component.html',
   styleUrls: ['./spents.component.css']
 })
@@ -104,6 +104,9 @@ export class SpentsComponent implements OnInit {
     if (this.form.invalid) { this.notif.show('Completa todos los campos requeridos', 'error'); return; }
     const val = this.form.value as any;
 
+    console.log('idUser:', this.auth.getUserId());  // ← agrega esto
+    console.log('form value:', val);
+
     if (this.isEdit()) {
       const payload = {
         idSpent: Number(val.idSpent),
@@ -116,6 +119,7 @@ export class SpentsComponent implements OnInit {
         idCategorie: Number(val.idCategorie),
         idUser: Number(val.idUser)
       };
+      console.log('payload enviado:', payload);
       this.spentSvc.update(payload as any).subscribe({
         next: () => { this.notif.show('Gasto actualizado', 'success'); this.modalVisible.set(false); this.load(); },
         error: () => this.notif.show('Error al guardar', 'error')

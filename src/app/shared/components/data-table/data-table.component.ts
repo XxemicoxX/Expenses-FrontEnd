@@ -25,7 +25,7 @@ export class DataTableComponent {
   get data(): any[] {
     return this._data;
   }
-  
+
   @Input() title = 'Registros';
   @Input() loading = false;
   @Output() editItem = new EventEmitter<any>();
@@ -50,9 +50,19 @@ export class DataTableComponent {
     return String(value);
   }
 
-  confirmDelete(row: any) {
-    if (confirm('¿Eliminar este registro?')) {
-      this.deleteItem.emit(row);
-    }
+  pendingDelete = signal<any>(null);
+  
+  confirmDelete(row: any, event: MouseEvent) {
+    event.stopPropagation();
+    this.pendingDelete.set(row);
+  }
+
+  cancelDelete() {
+    this.pendingDelete.set(null);
+  }
+
+  executeDelete() {
+    this.deleteItem.emit(this.pendingDelete());
+    this.pendingDelete.set(null);
   }
 }

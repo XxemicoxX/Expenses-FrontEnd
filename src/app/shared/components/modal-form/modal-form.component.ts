@@ -16,4 +16,11 @@ export class ModalFormComponent {
   @Input() form!: FormGroup;
   @Output() submitted = new EventEmitter<void>();
   @Output() cancelled = new EventEmitter<void>();
+
+  onEnter(event: Event) { 
+  const tag = (event.target as HTMLElement).tagName.toLowerCase();
+  if (tag !== 'textarea') {
+    this.submitted.emit();
+  }
+}
 }

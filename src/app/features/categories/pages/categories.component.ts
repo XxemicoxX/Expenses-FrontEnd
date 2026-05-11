@@ -1,11 +1,12 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { CategorieService } from '../../../core/services/category.service';
+
 import { NotificationService } from '../../../core/services/notification.service';
 import { DataTableComponent, TableColumn } from '../../../shared/components/data-table/data-table.component';
 import { ModalFormComponent } from '../../../shared/components/modal-form/modal-form.component';
 import { Categorie } from '../../../core/models';
+import { CategorieService } from '../../../core/services/categorie.service';
 
 @Component({
   selector: 'app-categories',
@@ -78,9 +79,10 @@ export class CategoriesComponent implements OnInit {
   }
 
   delete(row: Categorie) {
+    console.log('delete row:', row, 'id:', row.idCategorie, typeof row.idCategorie);
     this.svc.delete(row.idCategorie).subscribe({
       next: () => { this.notif.show('Categoría eliminada', 'success'); this.load(); },
       error: () => this.notif.show('Error al eliminar', 'error')
-    });
+    }); 
   }
 }

@@ -7,10 +7,8 @@
     <div class="table-actions">
       <div class="search-box">
         <span class="search-icon">⌕</span>
-        <input type="text"
-               placeholder="Buscar..."
-               [value]="searchQuery()"
-               (input)="searchQuery.set($any($event.target).value)" />
+        <input type="text" placeholder="Buscar..." [value]="searchQuery()"
+          (input)="searchQuery.set($any($event.target).value)" />
       </div>
       <button class="btn-add" (click)="addItem.emit()">
         <span>＋</span> Agregar
@@ -19,42 +17,53 @@
   </div>
 
   @if (loading) {
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <span>Cargando datos...</span>
-    </div>
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <span>Cargando datos...</span>
+  </div>
   } @else if (filtered.length === 0) {
-    <div class="empty-state">
-      <div class="empty-icon">◎</div>
-      <p>No se encontraron registros</p>
-    </div>
+  <div class="empty-state">
+    <div class="empty-icon">◎</div>
+    <p>No se encontraron registros</p>
+  </div>
   } @else {
-    <div class="table-scroll">
-      <table>
-        <thead>
-          <tr>
-            @for (col of columns; track col.key) {
-              <th>{{ col.label }}</th>
-            }
-            <th class="actions-col">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (row of filtered; track $index) {
-            <tr>
-              @for (col of columns; track col.key) {
-                <td [class]="'cell-' + (col.type || 'text')">
-                  {{ formatCell(row[col.key], col.type) }}
-                </td>
-              }
-              <td class="actions-cell">
-                <button class="btn-edit" (click)="editItem.emit(row)" title="Editar">✎</button>
-                <button class="btn-delete" (click)="confirmDelete(row)" title="Eliminar">✕</button>
-              </td>
-            </tr>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          @for (col of columns; track col.key) {
+          <th>{{ col.label }}</th>
           }
-        </tbody>
-      </table>
+          <th class="actions-col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of filtered; track $index) {
+        <tr>
+          @for (col of columns; track col.key) {
+          <td [class]="'cell-' + (col.type || 'text')">
+            {{ formatCell(row[col.key], col.type) }}
+          </td>
+          }
+          <td class="actions-cell">
+            <button class="btn-edit" (click)="editItem.emit(row)" title="Editar">✎</button>
+            <button class="btn-delete" (click)="confirmDelete(row, $event)" title="Eliminar">✕</button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  }
+  @if (pendingDelete()) {
+  <div class="confirm-overlay" (click)="cancelDelete()">
+    <div class="confirm-box" (click)="$event.stopPropagation()">
+      <p>¿Eliminar este registro?</p>
+      <div class="confirm-actions">
+        <button class="btn-cancel-confirm" (click)="cancelDelete()">Cancelar</button>
+        <button class="btn-delete-confirm" (click)="executeDelete()">Eliminar</button>
+      </div>
     </div>
+  </div>
   }
 </div>

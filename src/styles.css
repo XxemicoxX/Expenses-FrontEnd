@@ -172,3 +172,13 @@ body {
 router-outlet + * {
   animation: fadeInUp 0.25s ease both;
 }
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
